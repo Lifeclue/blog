@@ -1,0 +1,68 @@
+
+@import "fonts";
+
+html {
+  font: 20px 'Roboto', 'Spoqa Han Sans', Helvetica, Arial, sans-serif;
+  font-weight:400;
+}
+
+.post-list .title {
+  // font-weight: bold;
+  font-size: 1.2em;
+}
+
+.post-list .item {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #dce6f0;
+  border-radius: 5px;
+}
+
+.clickable-box {
+  cursor: pointer;
+}
+.clickable-box:hover {
+  background-color: #f3f6fa;
+}
+
+.post-title {
+  font-size: 2rem;
+}
+
+.post-category {
+  font-size: 0.8rem;
+  color: #00699b;
+  margin-bottom: 8px;
+}
+
+.post-date {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.post-content{
+  margin-top: 92px;
+}
+
+.post-license {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px dashed #dce6f0;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.post-tag-list {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px dashed #dce6f0;
+}
+
+a {
+  color: #606c71;
+}
+
+.a-home, .a-home:hover, .a-home:active {
+  color: white;
+  text-decoration: none;
+}

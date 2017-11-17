@@ -1,0 +1,21 @@
+  {% if include.tag_count > 0 %}
+    <footer class="post-tag-list">
+      <div class="mb-1">
+        <small>
+        {% if include.tag_count == 1 %}
+          Tag
+        {% elsif include.tag_count > 1 %}
+          Tags
+        {% endif %}
+        </small>
+      </div>
+      {% for tag in page.tags %}
+      {% if tag == "" %}
+        {% continue %}
+      {% endif %}
+      <a class="btn btn-sm btn-outline-info" href="{{site.baseurl}}/tags#{{tag | url_encode}}">
+        <i class="fa fa-tag fa-fw"></i> {{ tag }}
+      </a>
+      {% endfor %}
+    </footer>
+  {% endif %}

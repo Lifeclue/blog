@@ -1,0 +1,47 @@
+---
+layout: page
+title: Tags
+permalink: /tags
+---
+
+<div class="home">
+
+<!-- cycles through posts to get tags -->
+{% for post in site.posts %}
+    {% assign tags = tags | concat:post.tags %}
+{% endfor %}
+{% assign tags = tags | uniq %}
+  <!-- Displays the posts and pages that contains the tag-->
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    {% for tag in tags %}
+    <li class="nav-item">
+      <a class="nav-link{% if forloop.first %} active{% endif %}" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+        <i class="fa fa-tag fa-fw"></i> {{ tag }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    {% for tag in tags %}
+    <div class="tab-pane fade post-list{% if forloop.first %} show active{% endif %}" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+      {% for post in site.posts %}
+          {% if post.tags contains tag %}
+          <div class="item clickable-box" onclick="location.href='{{ post.url | prepend: site.baseurl }}';">
+            <h2>
+              {% if post.category %}
+              <div class="post-category">
+              [{{post.category | replace: "-", " " | capitalize}}]
+              </div>
+              {% endif %}
+              {{ post.title }}
+            </h2>
+            <div class="post-date">
+              {{ post.date | date: "%Y년 %m월 %d일" }}
+            </div>
+          </div>
+          {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
