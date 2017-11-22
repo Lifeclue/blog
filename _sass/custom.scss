@@ -14,7 +14,7 @@ html {
 .post-list .item {
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid #dce6f0;
+  border: 1px solid $border-color;
   border-radius: 5px;
 }
 
@@ -22,7 +22,7 @@ html {
   cursor: pointer;
 }
 .clickable-box:hover {
-  background-color: #f3f6fa;
+  background-color: $code-bg-color;
 }
 
 .post-title {
@@ -72,5 +72,5 @@ table {
 }
 
 thead {
-  background-color: #f3f6fa;
+  background-color: $code-bg-color;
 }
