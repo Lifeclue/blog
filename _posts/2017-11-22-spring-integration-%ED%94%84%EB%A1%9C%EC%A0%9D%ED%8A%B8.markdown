@@ -5,7 +5,6 @@ date: "2017-11-22 15:36:35 +0900"
 category: spring-integration-project
 ---
 
-# 소개
 Spring Integration 프로젝트를 시작합니다.
 Spring Integration 프로젝트란 말 그대로 Spring Integration을 이용한 프로젝트를
 말합니다.
