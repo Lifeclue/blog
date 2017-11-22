@@ -2,7 +2,7 @@
 @import "fonts";
 
 html {
-  font: 20px 'Roboto', 'Spoqa Han Sans', Helvetica, Arial, sans-serif;
+  font: 18px 'Roboto', 'Spoqa Han Sans', Helvetica, Arial, sans-serif;
   font-weight:400;
 }
 
@@ -65,4 +65,12 @@ a {
 .a-home, .a-home:hover, .a-home:active {
   color: white;
   text-decoration: none;
+}
+
+table {
+  font-size: 0.9rem;
+}
+
+thead {
+  background-color: #f3f6fa;
 }
