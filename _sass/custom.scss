@@ -44,18 +44,15 @@ html {
   margin-top: 92px;
 }
 
-.post-license {
+.hr-dashed {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px dashed #dce6f0;
-  font-size: 0.8rem;
-  color: #aaa;
+  border-top: 1px dashed $hr-border-color;
 }
 
-.post-tag-list {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px dashed #dce6f0;
+.post-license {
+  font-size: 0.8rem;
+  color: #aaa;
 }
 
 a {
