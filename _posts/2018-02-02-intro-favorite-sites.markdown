@@ -47,7 +47,7 @@ Could not open cache directory chv7ymti9wfycl8xz9b3wa14h (C:\Users\Lifeclue\.gra
 매우 잘 작동합니다. 뭐가 문제일까요? 여전히 Kotlin DSL Build script를 사용하여 프로젝트를 생성하면 같은 문제에 봉착합니다. 일단 이것을 사용하는 게 필수는 아니므로 이대로 시작하겠습니다. 저야 당연히 익숙한 쪽이 좋지요.
 여전히 gradlew는 생성되지 않았군요. 회사의 Ultimate판에서는 프로젝트를 생성할 때마다 매번 생성되었는데 IntelliJ 버전 차이인건지.. 모르겠군요. IDE의 노예라 이런 일이 생기면 어리둥절 합니다.
 
-![프로젝트 소스 구조도]({{"/assets/image/kotlin-famphlet/project-tree.png" | absolute_url}})  
+![프로젝트 소스 구조도]({{"/assets/image/kotlin-famphlet/project-tree.PNG" | absolute_url}})  
 프로젝트가 만들어졌습니다. 빌드에 성공하여 빌드 폴더도 생겼군요. Java와 Kotlin을 모두 선택하여 프로젝트를 생성하였기 때문에 소스 폴더에 java와 kotlin이 같이 생겼습니다.
 
 흥미롭군요. 다음 포스트에서는 HTTP 요청을 받아 `안녕, 여러분`이라는 메시지를 반환해보도록 하겠습니다.
