@@ -5,8 +5,10 @@ date: "2018-02-02 22:31:47 +0900"
 category: kotlin
 ---
 
-# Kotlin
 요새 제 주변에서 [Kotlin](https://kotlinlang.org) 칭찬하는 사람들을 많이 접합니다. 그래서 Kotlin 사이트에 들어가봤지요. 그들의 주장으로는 Java 개발자가 쉽게 시작할 수 있다고 합니다. 그래서 제가 한 번 도전해 보겠습니다.
+
+# Kotlin
+저도 잘 모르는 Kotlin을 조금 소개해 보자면 Kotlin은 [JetBrains](https://www.jetbrains.com/)에서 만들었습니다. JVM에서 구동 가능하고 Java와 100% 호환이 됩니다. 문체는 간결하고 NullPointerException에서 자유로운 등의 안정성도 갖추었다고 하는군요. 사이트의 예제 코드 몇몇을 보니 쪼끔 간결해진 것 같긴 합니다만 역시 전시물만 봐서는 잘 모르겠네요.
 
 뭐든 간단한 이야기나 프로젝트로 시작을 하는 것이 좋지요. 저는 사이트 주소를 입력하면 입력한 사이트들을 모아 즐겨찾기로 보여주는 서비스를 개발해보겠습니다.
 
@@ -18,7 +20,7 @@ category: kotlin
 IntelliJ에서 새로운 프로젝트를 만들어보았습니다.  
 ![새 프로젝트 만들기 창]({{"/assets/image/kotlin-famphlet/new-project-1.png" | absolute_url}})
 
-잘 모르지만 Gradle 프로젝트을 골라보았습니다. Kotlin DSL build script라는 게 있군요. 일단 Kotlin을 사용해 볼 예정이니 이것도 사용해 봅시다. 당연히 Kotlin으로 작업할 예정이므로 Libraries and Frameworks는 Kotlin으로 선택합니다.
+Gradle 프로젝트을 골라보았습니다. Kotlin DSL build script라는 게 있군요. 일단 Kotlin을 사용해 볼 예정이니 이것도 사용해 봅시다. 당연히 Kotlin으로 작업할 예정이므로 Libraries and Frameworks는 Kotlin으로 선택합니다.
 
 간단히 프로젝트의 기본 정보를 입력한 후  
 ![새 프로젝트 기본 정보 입력 창]({{"/assets/image/kotlin-famphlet/new-project-2.png" | absolute_url}})  
