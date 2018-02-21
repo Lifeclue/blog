@@ -3,6 +3,7 @@ layout: post
 title: "Spring boot로 '안녕, 여러분' 출력하기"
 date: "2018-02-21 23:01:43 +0900"
 category: kotlin
+comments: true
 ---
 
 코틀린 프로젝트도 만들었겠다, Spring boot 의존성을 추가하고 HTTP 요청을 통해 '안녕, 여러분'을 출력해보도록 하겠습니다.  
