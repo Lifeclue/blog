@@ -10,6 +10,11 @@ $(function() {
     var tag = $(e.currentTarget).data('tag');
     castItems(tag);
   });
+  if (window.location.hash.length > 0) {
+    var tag = decodeURIComponent(window.location.hash.substring(1));
+    $('.nav-link.active').removeClass('active');
+    $('.nav-link[data-tag="' + tag + '"]').addClass('active');
+  }
   castItems($('.nav-link.active').data('tag'));
   $('.post-list').prepend($('#pills-tab'));
 });
