@@ -4,44 +4,54 @@ title: Tags
 permalink: /tags
 ---
 
+<script>
+$(function() {
+  $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
+    var tag = $(e.currentTarget).data('tag');
+    castItems(tag);
+  });
+  castItems($('.nav-link.active').data('tag'));
+  $('.post-list').prepend($('#pills-tab'));
+});
+
+function castItems(tag) {
+  $('.item').each(function() {
+    $(this).data('tags').indexOf(' ' + tag + ' ') > -1 ? $(this).show() : $(this).hide();
+  });
+}
+</script>
+
 <div class="home">
 
-<!-- cycles through posts to get tags -->
 {% for post in site.posts %}
-    {% assign tags = tags | concat:post.tags %}
 {% endfor %}
-{% assign tags = tags | uniq %}
-  <!-- Displays the posts and pages that contains the tag-->
+  <div class="post-list">
+    {% for post in site.posts %}
+    {% assign tags = tags | concat:post.tags %}
+    <div class="item clickable-box" onclick="location.href='{{ post.url | prepend: site.baseurl }}';" data-tags=" {{post.tags | join: ' '}} ">
+      <h2>
+        {% if post.category %}
+        <div class="post-category">
+        [{{post.category | replace: "-", " " | capitalize}}]
+        </div>
+        {% endif %}
+        {{ post.title }}
+      </h2>
+      <div class="post-date">
+        {{ post.date | date: "%Y년 %m월 %d일" }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% assign tags = tags | uniq %}
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     {% for tag in tags %}
     <li class="nav-item">
-      <a class="nav-link{% if forloop.first %} active{% endif %}" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+      <a class="nav-link{% if forloop.first %} active{% endif %}" data-tag="{{tag}}" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
         <i class="fa fa-tag fa-fw"></i> {{ tag }}
       </a>
     </li>
     {% endfor %}
   </ul>
-  <div class="tab-content" id="pills-tabContent">
-    {% for tag in tags %}
-    <div class="tab-pane fade post-list{% if forloop.first %} show active{% endif %}" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-      {% for post in site.posts %}
-          {% if post.tags contains tag %}
-          <div class="item clickable-box" onclick="location.href='{{ post.url | prepend: site.baseurl }}';">
-            <h2>
-              {% if post.category %}
-              <div class="post-category">
-              [{{post.category | replace: "-", " " | capitalize}}]
-              </div>
-              {% endif %}
-              {{ post.title }}
-            </h2>
-            <div class="post-date">
-              {{ post.date | date: "%Y년 %m월 %d일" }}
-            </div>
-          </div>
-          {% endif %}
-      {% endfor %}
-    </div>
-    {% endfor %}
-  </div>
 </div>
