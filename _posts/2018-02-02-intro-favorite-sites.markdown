@@ -4,6 +4,7 @@ title: "사이트 즐겨찾기 서비스로 Kotlin 시작하기"
 date: "2018-02-02 22:31:47 +0900"
 category: kotlin
 comments: true
+tags: Kotlin 스프링 Spring 스프링부트 SpringBoot 인텔리제이 IntelliJ
 ---
 
 요새 제 주변에서 [Kotlin](https://kotlinlang.org) 칭찬하는 사람들을 많이 접합니다. 그래서 Kotlin 사이트에 들어가봤지요. 그들의 주장으로는 Java 개발자가 쉽게 시작할 수 있다고 합니다. 그래서 제가 한 번 도전해 보겠습니다.

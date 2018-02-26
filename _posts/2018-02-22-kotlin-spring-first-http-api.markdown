@@ -2,7 +2,10 @@
 layout: post
 title: "Famphlet 프로젝트 버전 관리하기"
 date: "2018-02-22 21:02:09 +0900"
-category: Kotlin
+category: kotlin
+comments: true
+tags: Kotlin 스프링 Spring 스프링부트 SpringBoot Git Github 
+
 ---
 
 프로젝트를 본격적으로 다뤄보기 전에 버전 관리를 적용하도록 하겠습니다. 블로그도 Github을 이용하고 있는 만큼 Git을 이용해 버전 관리를 하면서 Github과 연동해보죠.
