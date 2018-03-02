@@ -4,3 +4,13 @@ show_downloads: false
 google_analytics: UA-42372652-1
 theme: jekyll-theme-cayman
 baseurl: "/blog"
+
+# Post defaults
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts"
+    values:
+      comments: true
+      author: "Lifeclue"
