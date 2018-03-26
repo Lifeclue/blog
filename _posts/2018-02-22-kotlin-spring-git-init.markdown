@@ -4,7 +4,7 @@ title: "Famphlet 프로젝트 버전 관리하기"
 date: "2018-02-22 21:02:09 +0900"
 category: kotlin
 comments: true
-tags: Kotlin 스프링 Spring 스프링부트 SpringBoot Git Github 
+tags: 코틀린 Kotlin 스프링 Spring 스프링부트 SpringBoot Git Github
 
 ---
 
