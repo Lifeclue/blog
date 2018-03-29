@@ -123,16 +123,25 @@ dependencies {
 ![프로젝트 소스 파일 구조]({{"/assets/image/kotlin-famphlet/project-tree.PNG" | absolute_url}}) > > >
 ![프로젝트 소스 파일 구조]({{"/assets/image/kotlin-famphlet/greeting/project-tree.PNG" | absolute_url}})
 
-코틀린은 디렉토리 구조를 만들 때 공통 패키지를 제외하는 것이 기본 규약입니다. (Coding Conventions의 [Directory structure](https://kotlinlang.org/docs/reference/coding-conventions.html#directory-structure)절 참고)  
-또한 소스 코드의 package와 디렉토리 구조를 맞출 필요도 없습니다. (Basic Syntax의 [Defining Packages](https://kotlinlang.org/docs/reference/basic-syntax.html)절 참고)  
-Famphlet 프로젝트의 기본 패키지는 com.lifeclue.blog.famphlet이지만 디렉토리 구조를 다음의 구조처럼 만들지 않아도 된다는 이야기입니다.  
-(기본 패키지가 com.lifeclue.blog.famphlet인 이유는 제가 프로젝트를 만들 때 이렇게 지었기 때문입니다. 여러분도 정하고 싶은 대로 정하시면 됩니다.)
-
+코틀린은 본디 소스 코드의 package와 디렉토리 구조를 맞출 필요가 없습니다. (Basic Syntax의 [Defining Packages](https://kotlinlang.org/docs/reference/basic-syntax.html)절 참고)  
+그러나 그들은 순수 코틀린 프로젝트의 경우 디렉토리 구조에서 공통 패키지는 제외하고 하위 패키지는 디렉토리 구조를 맞출 것을 권장합니다. (Coding Conventions의 [Directory structure](https://kotlinlang.org/docs/reference/coding-conventions.html#directory-structure)절 참고)  
+예를 들어 Famphlet 프로젝트에 `com.lifeclue.blog.famphlet.domain.address.AddressService.kt`라는 클래스가 있다고 하면
 ```
-src/main/kotlin/com/lifeclue/blog/famphlet
+src                                    src
+  └─main                                 └─main
+    └─kotlin                               └─kotlin
+      └─com                                  └─domain
+        └─lifeclue                             └─address
+          └─blog                                 └─AddressService.kt
+            └─famphlet		
+              └─domain		
+                └─address		
+                  └─AddressService.kt		
 ```
 
-일단 시작하는 단계이니 하위 디렉토리 없이 작성하겠습니다. 먼저 스프링 부트로 시작하고 있으니 스프링 부트 애플리케이션부터 만들어 볼까요? 코드를 작성하기 전에 클래스 파일을 만들겠습니다. 이 파일에는 하나의 클래스가 포함될 예정이니 클래스 이름으로 파일을 만들어야 합니다. (Coding Conventions의 [Source code organization >> Source file names](https://kotlinlang.org/docs/reference/coding-conventions.html#source-file-names)절 참고)
+왼쪽 디렉토리 구조가 기존의 Java의 형태였다면 Kotlin의 디렉토리 구조는 오른쪽과 같습니다.
+
+일단 시작하는 단계이니 root 디렉토리(여기선 src/main/kotlin)에 작성하겠습니다. 먼저 스프링 부트로 시작하고 있으니 스프링 부트 애플리케이션부터 만들어 볼까요? 코드를 작성하기 전에 클래스 파일을 만들겠습니다. 이 파일에는 하나의 클래스가 포함될 예정이니 클래스 이름으로 파일을 만들어야 합니다. (Coding Conventions의 [Source code organization >> Source file names](https://kotlinlang.org/docs/reference/coding-conventions.html#source-file-names)절 참고)
 
 ```
 src/main/kotlin/GreetingApplication.kt
