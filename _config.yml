@@ -2,5 +2,5 @@ title: Lifeclue
 description: "Lifeclue라는 필명으로 글을 써나가고 있습니다. 주로 개발과 관련된 이야기를 씁니다." # used by search engines
 show_downloads: false
 google_analytics: UA-42372652-1
-theme: jekyll-theme-cayman
+theme: jekyll-theme-slate
 baseurl: "/blog"
