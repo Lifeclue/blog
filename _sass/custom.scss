@@ -32,7 +32,7 @@ figure {
 .post-list .item {
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid $border-color;
+  border: 1px solid #dce6f0;
   border-radius: 5px;
 }
 
@@ -44,7 +44,7 @@ figure {
   cursor: pointer;
 }
 .clickable-box:hover {
-  background-color: $code-bg-color;
+  background-color: #f3f6fa;
 }
 
 .post-title {
@@ -69,7 +69,7 @@ figure {
 .hr-dashed {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px dashed $border-color;
+  border-top: 1px dashed #dce6f0;
 }
 
 .post-license {
@@ -91,7 +91,7 @@ table {
 }
 
 thead {
-  background-color: $code-bg-color;
+  background-color: #f3f6fa;
 }
 .btn-tag {
   color: #26a69a;
