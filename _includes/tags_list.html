@@ -13,8 +13,8 @@
       {% if tag == "" %}
         {% continue %}
       {% endif %}
-      <a class="btn btn-sm btn-outline-info" href="{{site.baseurl}}/tags#{{tag | url_encode}}">
-        <i class="fa fa-tag fa-fw"></i> {{ tag }}
+      <a class="btn btn-tag" href="{{site.baseurl}}/tags#{{tag | url_encode}}">
+        <i class="fa fa-tag fa-fw"></i> <span>{{ tag }}</span>
       </a>
       {% endfor %}
     </footer>

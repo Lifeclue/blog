@@ -5,11 +5,13 @@ layout: default
   <header id="main" style="background-image: url('{{ site.baseurl }}/{{ page.feature-img }}')">
     <h1 id="{{ page.title | cgi_escape }}" class="title">
       {% if page.category %}
-      <a class="post-category d-block" href="{{site.baseurl}}/series">
-        {% if page.category %}
-        [{{page.category | replace: "-", " " | capitalize}}]
-        {% endif %}
-      </a>
+      <div>
+        <a class="post-category" href="{{site.baseurl}}/series">
+          {% if page.category %}
+          [{{page.category | replace: "-", " " | capitalize}}]
+          {% endif %}
+        </a>
+      </div>
       {% endif %}
       {{ page.title }}
     </h1>
@@ -17,7 +19,7 @@ layout: default
       {% include post-date.html post=page %}
     </p>
   </header>
-  <section class="post-content">{{ content }}</section>
+  <section class="post-content">{{ content | toc }}</section>
 
    <!-- Tag list -->
    {% include tags_list.html tag_count=page.tags.size %}

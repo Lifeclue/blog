@@ -53,7 +53,7 @@ function castItems(tag) {
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     {% for tag in tags %}
     <li class="nav-item">
-      <a class="nav-link{% if forloop.first %} active{% endif %}" data-tag="{{tag}}" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+      <a class="nav-link{% if forloop.first %} active{% endif %} btn-tag" data-tag="{{tag}}" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
         <i class="fa fa-tag fa-fw"></i> {{ tag }}
       </a>
     </li>
