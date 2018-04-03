@@ -6,7 +6,7 @@ repository: blog/lifeclue
 show_downloads: false
 markdown: kramdown
 google_analytics: UA-42372652-1
-theme: jekyll-theme-slate
+theme: jekyll-theme-cayman
 baseurl: "/blog"
 
 plugins:
