@@ -311,6 +311,8 @@ class InMemorySiteItemStore : SiteItemStore {
 
 즐겨찾기 수정, 삭제 함수도 피해갈 수 없습니다. 여기서는 예외를 생성하는 코드가 이전의 즐겨찾기 조회 함수와 중복되기 때문에 팩토리 함수를 정의하여 사용하였습니다. 상수로 정의해서 사용할 수도 있지만 요청마다 ID가 다르므로 팩토리 함수를 정의하였습니다.
 
+## Bean 객체
+
 이제 얼추 완성이 되어가고 있군요. 이 시점에 빌드를 해보면 문제 없이 성공할 겁니다. 한 번 실행해 볼까요? 애플리케이션을 실행하면 아마 다음과 같은 오류를 만나게 되실 겁니다.
 
 >Parameter 0 of constructor in com.lifeclue.blog.famphlet.SiteItemController required a bean of type 'com.lifeclue.blog.famphlet.SiteItemService' that could not be found.
@@ -319,7 +321,7 @@ class InMemorySiteItemStore : SiteItemStore {
 
 >Consider defining a bean of type 'com.lifeclue.blog.famphlet.SiteItemService' in your configuration.
 
-설정을 통해 `SiteItemService`형의 빈을 정의해보지 않겠니? 라고 상냥하게 안내해주네요. 클래스를 빈으로 정의하면 스프링이 그 클래스(빈) 객체의 생명 주기를 관리해 줍니다. 클래스를 빈으로 등록하는 방법은 몇가지가 있는데, 예전에는 xml 설정으로 주로 등록하였습니다. 아래와 같은 형태였지요.
+"설정을 통해 `SiteItemService`형의 빈을 정의해보지 않겠니?" 라고 상냥하게 안내해주네요. 클래스를 빈으로 정의하면 스프링이 그 클래스(빈) 객체의 생명 주기를 관리해 줍니다. 클래스를 빈으로 등록하는 방법은 몇가지가 있는데, 예전에는 xml 설정으로 주로 등록하였습니다. 아래와 같은 형태였지요.
 
 {% highlight xml %}
 <bean id="siteItemService" class="com.lifeclue.blog.famphlet.SiteItemController" />
@@ -369,6 +371,8 @@ class InMemorySiteItemStore : SiteItemStore {
 {% endhighlight %}
 
 이번엔 [@Component 어노테이션](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Component.html)을 붙였습니다. 이 어노테이션 역시 Bean으로 정의하기 위해 붙입니다.
+
+# 테스트
 
 이제 다시 실행해봅시다. 이번엔 스프링 부트가 잘 실행이 되는군요. 테스트를 위해 `/sites` API를 호출해 볼까요? API를 호출하려면 호스트와 포트를 알아야겠죠? 호스트는 내 컴퓨터의 애플리케이션을 호출할 것이므로 localhost로 하면 됩니다. 포트를 알아내면 되는데, 스프링 부트 로그를 보시면 다음과 같은 로그를 확인하실 수 있을겁니다.
 
