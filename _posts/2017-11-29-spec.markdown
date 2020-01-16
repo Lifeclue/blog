@@ -4,6 +4,7 @@ title: "제품 명세서"
 date: "2017-11-29 23:09:19 +0900"
 category: spring-integration-project
 comments: true
+published: false
 ---
 
 프로젝트 개발을 위해 프로젝트 명세서를 먼저 작성하려고 합니다. 명세서 작성은 여러모로 프로젝트 진행에 도움이 될 것입니다.
@@ -57,7 +58,7 @@ comments: true
 - 우리는 식별값에 해당하는 사용자 정보를 획득한 후 가공하여 제휴사에게 전달합니다.
 - 제휴사에서 해당 사용자의 가입이 완료되면 식별값과 함께 가입 완료 통지를 하고 우리는 수신하여 처리합니다.
 
-![]({{ "/assets/image/spring-integration-project/spring-integration-project-flow-chart.svg" | absolute_url }})
+![]({{ "/assets/images/page/spring-integration-project/spring-integration-project-flow-chart.svg" | absolute_url }})
 
 ### 기능 상세
 #### 식별값 (토큰)

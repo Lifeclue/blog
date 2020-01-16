@@ -1,22 +1,46 @@
 title: Lifeclue
 email: lifecluee@gmail.com
-description: "Lifeclue라는 필명으로 글을 써나가고 있습니다. 주로 개발과 관련된 이야기  를 씁니다." # used by search engines
-github_username: lifeclue
-repository: blog/lifeclue
+description: "Developer / Backend / Java / Spring / Kotlin / Ktor"
 show_downloads: false
+show_excerpts: true
 markdown: kramdown
 google_analytics: UA-42372652-1
-theme: jekyll-theme-cayman
 baseurl: "/blog"
+date_format: "%F"
 
+# https://github.com/dirkfabisch/mediator
+name: "Lifeclue"
+author: "Lifeclue"
+paginate: 5
+url: "https://lifeclue.github.io"
+float_logo: "/assets/images/site/logo-32.png"
+logo: "/assets/images/site/logo.png"
+cover: "/assets/images/site/cover.svg"
+author_image: "/assets/images/site/author_image.jpg"
+disqus: "lifeclue-blog"
+
+social:
+  - icon:	github
+    url:	https://github.com/lifeclue
+    desc:	Fork me on github
+    share_url:
+    share_title:
+    share_link:
 plugins:
-- jekyll-coffeescript
-- jekyll-gist
-- jekyll-github-metadata
-- jekyll-paginate
-- jekyll-relative-links
-- jekyll-optional-front-matter
-- jekyll-readme-index
-- jekyll-default-layout
-- jekyll-titles-from-headings
-- jekyll-toc
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jemoji
+  - jekyll-paginate
+#- jekyll-coffeescript
+#- jekyll-gist
+#- jekyll-github-metadata
+#- jekyll-paginate
+#- jekyll-relative-links
+#- jekyll-optional-front-matter
+#- jekyll-readme-index
+#- jekyll-default-layout
+#- jekyll-titles-from-headings
+#- jekyll-toc
+#- jekyll-remote-theme
+
+

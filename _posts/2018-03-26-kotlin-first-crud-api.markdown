@@ -6,6 +6,7 @@ category: kotlin
 comments: true
 toc: true
 tags: 코틀린 Kotlin 스프링 Spring 스프링부트 SpringBoot RestController HTTP
+published: false
 ---
 
 이제 Famphlet 프로젝트에 읽고, 만들고, 바꾸고, 지우는 API를 추가해 보겠습니다. 이 프로젝트는 기본적으로 즐겨찾기를 관리하는 프로젝트이기 때문에 이러한 API가 기본으로 제공될 필요가 있습니다. 설계 없이 프로젝트를 막 진행하는 감이 있긴 합니다만 어쨌든 기본 기능이니 건너뛰고 구현해 봅시다.  
@@ -56,7 +57,7 @@ HTTP를 확장한 어떤 애플리케이션은 자원을 부분적으로 수정�
 
 우리는 [Kotlin Interfaces 문서](https://kotlinlang.org/docs/reference/interfaces.html)를 참고하여 인터페이스를 만들어 볼 겁니다. 만들고자 하는 디렉토리에 오른쪽 버튼을 누르고 `New` 메뉴를 확장하여 Kotlin File/Class를 선택합시다. (Alt + Insert, Command + N)
 
-![코틀린 인터페이스 생성 대화창]({{"/assets/image/kotlin-famphlet/first-api/new-site-item-service-interface.PNG" | absolute_url}})
+![코틀린 인터페이스 생성 대화창]({{"/assets/images/page/kotlin-famphlet/first-api/new-site-item-service-interface.PNG" | absolute_url}})
 
 일단 모든 소스 코드의 package는 다음과 같습니다. 이 인터페이스에도 첫 줄에 이 패키지가 들어갑니다.
 
@@ -83,9 +84,9 @@ interface SiteItemService {
 
 인텔리제이에서 방금 짠 인터페이스를 보면 `SiteItem`이 모두 빨간 색일 겁니다. 이곳에 커서를 놓고 Alt + Enter를 눌러보죠. 현재 이곳에 오류가 있고 오류를 해결하기 위한 방안들이 나열됩니다. 여기서 `Create class 'SiteItem'`을 누르면 클래스를 빠르게 만들 수 있습니다. 다음 단계에서 `Choose class container`라는 선택지가 나오는데 저는 개별 파일로 작성할 예정이므로 `Extract to separate file`을 골랐습니다.
 
-![빠른 클래스 생성]({{"/assets/image/kotlin-famphlet/first-api/quick-create-class.PNG" | absolute_url}})
+![빠른 클래스 생성]({{"/assets/images/page/kotlin-famphlet/first-api/quick-create-class.PNG" | absolute_url}})
 
-![생성될 클래스 위치 선정]({{"/assets/image/kotlin-famphlet/first-api/choose-class-container.PNG" | absolute_url}})
+![생성될 클래스 위치 선정]({{"/assets/images/page/kotlin-famphlet/first-api/choose-class-container.PNG" | absolute_url}})
 
 {% highlight kotlin %}
 // 축약 코드
@@ -186,11 +187,11 @@ class StandardSiteItemService: SiteItemService {
 
 클래스를 생성하면 `class StandardSiteItemService`에 빨간 밑줄이 쳐져 있을 겁니다. 역시 이곳에서 Alt + Enter를 누르면 오류를 어떻게 해결 할지 선택할 수 있습니다. (Intellij 만세)
 
-![인터페이스 멤버 구현]({{"/assets/image/kotlin-famphlet/first-api/implement-members.PNG" | absolute_url}})
+![인터페이스 멤버 구현]({{"/assets/images/page/kotlin-famphlet/first-api/implement-members.PNG" | absolute_url}})
 
 구현할 인터페이스 멤버 선택 화면이 나오면 모두 선택하세요.
 
-![구현할 인터페이스 멤버 선택]({{"/assets/image/kotlin-famphlet/first-api/choose-members-will-implement.PNG" | absolute_url}})
+![구현할 인터페이스 멤버 선택]({{"/assets/images/page/kotlin-famphlet/first-api/choose-members-will-implement.PNG" | absolute_url}})
 
 이제 구현해야 할 멤버 함수들에 코드를 채워넣어 봅시다.
 
@@ -394,7 +395,7 @@ http://localhost:8080/sites
 
 이제 즐겨찾기를 추가해봅시다. POST 요청을 해야 하므로 브라우저가 아닌 다른 도구가 필요할 것 같네요. 저는 [Postman](https://www.getpostman.com/)을 사용하겠습니다.
 
-![포스트맨을 통한 포스트 요청]({{"/assets/image/kotlin-famphlet/first-api/postman-request-post.PNG" | absolute_url}})
+![포스트맨을 통한 포스트 요청]({{"/assets/images/page/kotlin-famphlet/first-api/postman-request-post.PNG" | absolute_url}})
 
 우리의 `/sites` 포스트 요청은 인자에 @RequestBody 어노테이션이 붙어있으므로 요청이 JSON 형태여야 합니다. 만약 포스트맨을 쓰신다면 Body를 raw로 설정하시고 가장 오른쪽의 선택지를 `JSON(application/json)`로 선택해주세요. 우리의 `/sites` 포스트 요청은 헤더의 `Content-Type`이 `application/json`이어야 하기 때문입니다.
 응답은 다음처럼 옵니다.
@@ -425,7 +426,7 @@ http://localhost:8080/sites/1
 
 수정을 해봅시다.
 
-![포스트맨을 통한 패치 요청]({{"/assets/image/kotlin-famphlet/first-api/postman-request-patch.PNG" | absolute_url}})
+![포스트맨을 통한 패치 요청]({{"/assets/images/page/kotlin-famphlet/first-api/postman-request-patch.PNG" | absolute_url}})
 
 응답을 보면 ID는 같은데 내용이 다르게 왔음을 알 수 있습니다. 잘 수정되었네요.
 
@@ -439,7 +440,7 @@ http://localhost:8080/sites/1
 
 이제 지워볼까요?
 
-![포스트맨을 통한 딜리트 요청]({{"/assets/image/kotlin-famphlet/first-api/postman-request-delete.PNG" | absolute_url}})
+![포스트맨을 통한 딜리트 요청]({{"/assets/images/page/kotlin-famphlet/first-api/postman-request-delete.PNG" | absolute_url}})
 
 응답으로 지워진 즐겨찾기가 왔습니다.
 

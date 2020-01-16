@@ -5,6 +5,7 @@ date: "2018-02-21 23:01:43 +0900"
 category: kotlin
 comments: true
 tags: Kotlin 스프링 Spring 스프링부트 SpringBoot 그래들 Gradle
+published: false
 ---
 
 코틀린 프로젝트도 만들었겠다, Spring boot 의존성을 추가하고 HTTP 요청을 통해 '안녕, 여러분'을 출력해보도록 하겠습니다.  
@@ -120,8 +121,8 @@ dependencies {
 드디어 그래들 설정이 끝났습니다! 이제 코드를 작성해 볼 차례입니다.  
 일단 전 포스트에서 자바와 코틀린을 같이 선택하였지요. 그래서 src 폴더에는 java와 kotlin폴더가 있습니다. 노파심에 자바를 선택하였지만 모험심을 발휘하여 java 폴더는 지우도록 하겠습니다.
 
-![프로젝트 소스 파일 구조]({{"/assets/image/kotlin-famphlet/project-tree.PNG" | absolute_url}}) > > >
-![프로젝트 소스 파일 구조]({{"/assets/image/kotlin-famphlet/greeting/project-tree.PNG" | absolute_url}})
+![프로젝트 소스 파일 구조]({{"/assets/images/page/kotlin-famphlet/project-tree.PNG" | absolute_url}}) > > >
+![프로젝트 소스 파일 구조]({{"/assets/images/page/kotlin-famphlet/greeting/project-tree.PNG" | absolute_url}})
 
 코틀린은 본디 소스 코드의 package와 디렉토리 구조를 맞출 필요가 없습니다. (Basic Syntax의 [Defining Packages](https://kotlinlang.org/docs/reference/basic-syntax.html)절 참고)  
 그러나 그들은 순수 코틀린 프로젝트의 경우 디렉토리 구조에서 공통 패키지는 제외하고 하위 패키지는 디렉토리 구조를 맞출 것을 권장합니다. (Coding Conventions의 [Directory structure](https://kotlinlang.org/docs/reference/coding-conventions.html#directory-structure)절 참고)  
