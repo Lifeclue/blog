@@ -1,0 +1,167 @@
+I"@<p>프로젝트를 본격적으로 다뤄보기 전에 버전 관리를 적용하도록 하겠습니다. 블로그도 Github을 이용하고 있는 만큼 Git을 이용해 버전 관리를 하면서 Github과 연동해보죠.</p>
+
+<h1 id="git">Git</h1>
+
+<p>프로젝트를 진행하기 전에 이전 포스트까지 만들었던 소스를 깃헙에 올리도록 하겠습니다. 아무래도 버전관리를 해야 삽질을 해도 기댈 곳이 있겠죠?</p>
+
+<p>우리는 인텔리제이를 사용하고 있기 때문에 인텔리제이에서 손쉽게 <a href="https://git-scm.com/">Git</a>으로 버전관리를 할 수 있습니다. Famphlet 프로젝트가 열려 있는 상태에서 <a href="https://www.jetbrains.com/help/idea/enable-version-control-integration-dialog.html">VCS &gt; Enable Version Control Integration…</a> 메뉴로 진입하세요.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/create-git.png" alt="깃 저장소 만들기 메뉴" /></p>
+
+<p>메뉴로 진입하면 버전 관리 시스템을 선택하는 화면이 뜹니다. 여기서 Git을 고르면 이후에 깃헙과 연동할 수 있습니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/create-git-selector.png" alt="깃 저장소로 지정할 디렉토리 선택하기" /></p>
+
+<p>이제 Famphlet 프로젝트는 버전 관리 대상이 되었습니다. 그러나 바로 모든 파일들의 버전이 관리되는 것이 아니기 때문에, 관리할 대상을 Git에 추가해 주어야 합니다. 아마 지금은 파일들이 붉은 색으로 보일겁니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/unversioned-files.png" alt="버전 관리 되지 않는 파일들의 모습" /></p>
+
+<p>버전 관리가 필요한 파일들만 선택하여 Git에 추가합시다. (<a href="https://git-scm.com/docs/git-add">git add</a> 명령) Famphlet 프로젝트에서는 <code class="highlighter-rouge">src</code> 디렉토리와 하위의 모든 파일, 그리고 <code class="highlighter-rouge">build.gradle</code>과 <code class="highlighter-rouge">settings.gradle</code>정도가 되겠습니다. 해당 파일들을 선택하고 오른쪽 버튼을 눌러 <a href="https://www.jetbrains.com/help/idea/adding-files-to-version-control.html">Git &gt; Add</a> 메뉴를 실행합시다. (Ctrl + Alt + A, Command + Alt + A)</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/add-changes.png" alt="버전 관리가 필요한 대상 파일을 깃에 추가하기" /></p>
+
+<p>이렇게 추가된 파일들은 프로젝트 도구 창에서도 초록색으로 보이게 됩니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/versioned-files.png" alt="버전 관리 되는 파일들의 모습" /></p>
+
+<p>이제 커밋해 봅시다.(<a href="https://git-scm.com/docs/git-commit">git commit</a> 명령) 커밋은 변경된 파일을 하나의 버전으로 기록하는 것입니다. 기록은 자주 일어나므로 1.0, 1.1 이런 식으로 관리되지 않습니다. 그 버전이 어떤 버전인지 알기 위해 자연어로 기록합니다. 커밋을 하기 위해서 <a href="https://www.jetbrains.com/help/idea/checking-in-files.html">VCS &gt; Git &gt; Commit Directory…</a> 메뉴로 진입하세요.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/commit-directory-menu.png" alt="커밋 메뉴" /></p>
+
+<p>혹은 오른쪽 위의 네비게이션 도구 막대에서 커밋 아이콘을 누르거나</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/commit-menu-top.png" alt="네비게이션 도구 막대의 커밋 메뉴" /></p>
+
+<p>VCS 도구 창에서 커밋 아이콘을 누를 수도 있습니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/commit-menu-vcs-tool-window.png" alt="VCS 도구 창의 커밋 메뉴" /></p>
+
+<p>무엇보다 가장 편한 것은 단축키를 이용하는 방법입니다. (Ctrl + K, Command + K)</p>
+
+<p>커밋 메뉴로 진입하면 <a href="https://www.jetbrains.com/help/idea/commit-changes-dialog.html">커밋 대화상자</a>가 뜹니다. 대화상자에는 버전 관리 대상인 파일들이 초록색으로 표시되며 체크가 되어 있습니다. 그리고 제일 밑에 Unversioned files라는 항목이 있을겁니다. 여기엔 우리가 <code class="highlighter-rouge">Git &gt; Add</code> 메뉴로 추가하지 않은 모든 파일이 있습니다. 이것들은 버전 관리를 안할 생각이므로 체크가 해제된 상태로 두겠습니다.</p>
+
+<p>자 파일 목록 밑에 <code class="highlighter-rouge">Commit Message</code>라는 칸이 있습니다. (<a href="https://git-scm.com/docs/git-commit#git-commit--mltmsggt">git commit -m</a> 명령) 이곳이 바로 이 버전의 설명을 적는 공간입니다. 위 목록들은 Git에 처음으로 기록되는 버전이므로 이 버전의 커밋 메시지는 다음과 같이 하겠습니다.</p>
+
+<blockquote>
+  <p>Famphlet 프로젝트에서 ‘안녕, 여러분’으로 시작하기</p>
+</blockquote>
+
+<p>이제 Commit을 눌러봅시다. 앗!? <a href="https://www.jetbrains.com/help/idea/code-analysis.html">Code Analysis</a> 대화상자가 뜨네요. 에러는 없지만 2개의 경고가 있다는데, Review 버튼을 누르면 어떤 경고인지 확인할 수 있습니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/code-analysis-dialog.png" alt="코드 분석 대화상자" /></p>
+
+<p>두 개의 경고 모두 <code class="highlighter-rouge">Warning:(1, 1) Package directive doesn't match file location</code>이네요. 아니, 코틀린은 분명 패키지와 디렉토리 구조가 달라도 상관이 없다고 했는데 무슨 일일까요? <code class="highlighter-rouge">File&gt;Settings...</code> 메뉴로 설정 창을 띄워보겠습니다. 인텔리제이는 설정이 매우 많기 때문에 설정을 찾을 수 있는 검색 막대가 있습니다. 매우 유용하게 쓰고 있습니다.</p>
+
+<p>검색 막대에 <code class="highlighter-rouge"><span class="k">package</span> <span class="n">directive</span></code>라고 입력하니 Editor의 Inspections 설정이 나타납니다. 그 외에도 몇몇 설정이 있긴 하지만 코드 분석 결과를 보고 찾아본 것이니 Inspections 설정이 맞겠지요. 오른쪽을 보면 Kotlin 하위로 Java interop issues 중의 하나로 되어 있네요. 하지만 Famphlet은 이제 더이상 Java와 혼용할 생각이 없으므로 이 검사는 하지 않아도 됩니다. 체크를 해제하여 이 검사는 무시하도록 하겠습니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/inspections-settings.png" alt="코드 검사기 설정 화면" /></p>
+
+<p>자 이제 다시 커밋을 해봅시다. 거침 없이 커밋이 되는군요. 커밋이 완료되었다는 것을 Version Control 도구 표시 막대에 표시해 주는 친절함도 보여줍니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/committed-tooltip.png" alt="커밋 완료 말풍선" /></p>
+
+<p>그런데 커밋 화면에서 봤던 <code class="highlighter-rouge">Unversioned files</code>가 마음에 걸립니다. 이녀석들은 제가 커밋을 할 때마다 변경된 파일들 사이에서 제 초점을 흐리겠지요. 저는 앞으로도 이들의 버전 관리를 할 생각이 없으므로 제 눈 앞에서 사라지게 만들 요량입니다. Git은 버전 관리가 필요없는 파일들을 버전 관리 시스템에서 완벽하게 배제하기 위한 방법으로 <code class="highlighter-rouge">.gitignore</code>라는 파일에서 그 목록을 관리할 수 있게 해줍니다. 이 파일을 프로젝트 최상위 경로에 만들어 봅시다. 만들면 아마 깃에 추가할지를 묻는 대화상자가 나타날겁니다. 다른 곳에서 이 프로젝트를 <code class="highlighter-rouge">Checkout</code>하여 작업할 때도 버전 관리하고 싶지 않은 파일들이므로 <code class="highlighter-rouge">.gitignore</code> 파일은 Git 저장소에 함께 있는 것이 좋겠습니다. 이 대화상자에서는 Yes를 선택합니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/add-file-to-git.png" alt="파일을 깃에 추가할지 선택하는 대화상자" /></p>
+
+<p>파일이 추가되었습니다. 파일 목록을 보시면 빨간색이 아니라 초록색일겁니다. 방금 대화상자에서 Yes를 선택했기 때문이죠. 이제 이 파일에 사라졌으면 싶던 그 녀석들을 입력해보겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-gitignore" data-lang="gitignore">.gradle
+.idea
+build
+out</code></pre></figure>
+
+<p>이제 커밋을 해보면 <code class="highlighter-rouge">Unversioned files</code>가 안보일 겁니다. 속이 다 시원하네요.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/commit-gitignore.png" alt="깃 저장소로 지정할 디렉토리 선택하기" /></p>
+
+<p>인텔리제이의 <a href="https://plugins.jetbrains.com/plugin/7495--ignore">.ignore 플러그인</a>을 설치하면 무시하고 싶은 파일을 쉽게 목록에 추가할 수 있습니다. 그저 오른쪽 버튼을 눌러서 메뉴를 클릭만 하면 됩니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/plugin-settings.png" alt="플러그인 설정 화면" /></p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/ignore-plugin.png" alt="이그노어 플러그인 설치 화면" /></p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/ignore-context-menu.png" alt="대상 파일에서 오른쪽 버튼 눌러 쉽게 버전 관리 무시하기" /></p>
+
+<h1 id="github">Github</h1>
+
+<p>이제 Famphlet 프로젝트의 소스 파일 버전을 관리할 수 있게 되었습니다. 하지만 저장장치가 먹통이 된다면? 프로젝트 소스도 사라져 버릴테지요. <a href="https://github.com/">Github</a>과 연동하면 프로젝트 디렉토리가 통째로 날아가도 다시 프로젝트 소스를 되찾을 수 있습니다. 노트북에서 작업하고 싶을 때 얼마든지 노트북에서 프로젝트 소스 파일을 획득할 수 있습니다. 먼저 Github 저장소를 만드는 일부터 시작해보죠. Github에 방문하여 로그인을 하면 초록색 <a href="https://github.com/new">New repository</a>버튼을 보실 수 있습니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/github-main-page.png" alt="깃헙 메인 화면" /></p>
+
+<p>새로운 저장소를 만드는 것은 매우 간단합니다.</p>
+<ul>
+  <li>저장소 이름을 정하고</li>
+  <li>공개 여부를 설정한 후</li>
+  <li>초록색 <code class="highlighter-rouge">Create repository</code> 버튼을 누르세요.</li>
+</ul>
+
+<p>물론</p>
+
+<ul>
+  <li>저장소의 설명을 추가한다거나</li>
+  <li><code class="highlighter-rouge">.gitignore</code> 파일 또는 <code class="highlighter-rouge">README</code> 파일을 자동으로 생성할지를 정한다거나</li>
+  <li>라이센스를 고른다거나</li>
+</ul>
+
+<p>하는 부가적인 작업도 할 수 있습니다.</p>
+
+<p>다 만들면 생성된 저장소 화면으로 이동합니다. 화면에서 <code class="highlighter-rouge">Clone or download</code> 버튼을 누르면 저장소 주소를 복수할 수 있습니다. 여기서 저장소 주소를 복사합니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/clone-or-download.png" alt="깃헙 저장소 화면의 저장소 주소 복사하기" /></p>
+
+<p>이제 인텔리제이로 돌아옵시다. <a href="https://www.jetbrains.com/help/idea/commit-and-push-changes.html#push">VCS &gt; Git &gt; Push…</a> 메뉴를 누르시면 지금까지 커밋한 버전들을 원격 저장소(여기선 Github)로 밀어 넣을 수 있습니다. (Ctrl + Shift + K, Command + Shift + K)</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/push-commit-dialog.png" alt="커밋한 버전 푸시하기" /></p>
+
+<p>푸시 대화창을 보시면 <code class="highlighter-rouge">Define remote</code>라고 써있는 것을 볼 수 있습니다. 이곳을 눌러서 복사했던 저장소 주소를 붙여넣읍시다. (<a href="https://git-scm.com/docs/git-remote">git remote</a> 명령)</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/define-remote-dialog.png" alt="원격 저장소 정의하기" /></p>
+
+<p>저장소 주소를 넣고 나면 <code class="highlighter-rouge">Define remote</code>로 표시되던 곳이 <code class="highlighter-rouge">origin : master</code>라고 변경될 것입니다. 이제 푸시 버튼을 누르기만 하면 됩니다. 중간에 로그인 창이 나옵니다만 깃헙 로그인 정보를 넣으시면 됩니다. (<a href="https://git-scm.com/docs/git-push">git push</a> 명령)</p>
+
+<p>원래는 푸시 과정에 아무 문제가 없어야 하지만 저는 저장소를 만들 때 라이센스를 고르는 바람에 버전 충돌이 있었습니다. 혹시 저와 비슷한 상황을 만나셨다면 인텔리제이 오른쪽 아래에 푸시가 거부되었다는(Rejected) 말풍선이 떠있을 것입니다. 내 컴퓨터의 깃 버전과 원격 저장소의 깃 버전이 충돌한 건데, 아래와 같은 상황이 하나의 예라고 할 수 있습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">내 컴퓨터(로컬)</th>
+      <th style="text-align: left">버전</th>
+      <th>Github</th>
+      <th>버전</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Famphlet 프로젝트에서 ‘안녕, 여러분’으로 시작하기</td>
+      <td style="text-align: left">1</td>
+      <td>Initial commit</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">.gitignore 추가</td>
+      <td style="text-align: left">2</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>버전을 숫자로 쓰긴 했는데 원래는 (b27ede5같은)해시값으로 표시됩니다. 위 표에서 볼 수 있는 것처럼 저는 제 컴퓨터에서 이미 커밋을 두개나 해놓은 상태입니다. 그런데 깃헙에서 저장소를 만들면서 라이센스를 선택하였고, 저장소가 만들어지면서 라이센스(텍스트 파일)가 커밋이 되면서 깃헙 저장소에는 커밋이 하나가 된 것이지요.</p>
+
+<p>내 컴퓨터와 깃헙 저장소의 버전은 일관성이 있어야 합니다. 하나의 프로젝트이고 한 프로젝트의 소스 코드이니 당연하겠지요?</p>
+
+<p>버전 충돌로 푸시가 되지 않을 때는 일단 풀(내려받기)을 해주어야 합니다. 오른쪽 상단 툴바의 <a href="https://www.jetbrains.com/help/idea/sync-with-a-remote-repository.html#pull">Update Poject</a> 버튼을 눌러서 풀을 해봅시다. (<a href="https://git-scm.com/docs/git-pull">git pull</a> 명령)</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/pull-toolbar.png" alt="네비게이션 도구 막대의 풀 메뉴" /></p>
+
+<p>누르면 대화 상자가 나옵니다. Update Type을 Rebase로 선택하고 진행해보죠.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/update-project.png" alt="네비게이션 도구 막대의 풀 메뉴" /></p>
+
+<p>풀을 진행하면 버전이 정리가 됩니다. 이후에 푸쉬를 진행하시면 됩니다. Rebase된 버전들을 보면 이전 버전이지만 커밋 시간이 미래임을 보실 수 있습니다.</p>
+
+<p><img src="http://localhost:4000/blog/assets/images/page/kotlin-famphlet/git/after-rebase.png" alt="네비게이션 도구 막대의 풀 메뉴" /></p>
+
+<p>Rebase까지 해서 프로젝트를 Github과 연동해보았습니다. 이번 시간에 제대로 된 첫 기능을 붙여보려 했는데 버전 관리를 하면서 보니 길어질 것 같아 잘라갑니다. 다음 시간에는 정말 첫 기능을 붙여 보도록 하겠습니다.</p>
+:ET

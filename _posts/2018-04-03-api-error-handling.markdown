@@ -4,17 +4,13 @@ title: "API 오류 처리하기"
 date: "2018-04-03 21:39:06 +0900"
 categories: kotlin spring
 comments: true
-tags: 코틀린 Kotlin 스프링 Spring 스프링부트 SpringBoot
+tags: 스프링 Spring 스프링부트 SpringBoot
 ---
-저번 포스트가 너무 길어지는 바람에 부득이하게 내용을 끊었습니다. 이번 포스트에서 간단하게 나마 API의 오류를 처리하여 인간 친화적인 응답을 만들어 보도록 하겠습니다.
-
-# API 오류
-
-모든 API가 성공하는 것은 물론 아니겠지요. 요청에 실수가 있었을 수도 있고 API에 버그가 있을 수도 있습니다. 네트워크는 항상 불신해야 합니다. DB에 문제가 생길 수도 있습니다. 갑자기 많은 요청이 몰려 서버에 과부하가 걸릴 수도 있지요. 이런 경우에 API는 오류를 반환합니다.
+여러분의 API는 안녕하신가요? 모든 API가 성공적으로 응답하는 것은 물론 아니겠지요. 요청에 실수가 있었을 수도 있고 API에 버그가 있을 수도 있습니다. 네트워크는 항상 불신해야 합니다. DB에 문제가 생길 수도 있습니다. 이런 경우에 API는 오류를 반환합니다.
 
 ## Spring 기본 오류
 
-저번에 만든 Famphlet 프로젝트를 봅시다. Famphlet의 API는 `/sites`로 시작합니다. 그런데 API 사용자가 오타를 내면 어떨까요?
+Famphlet이라는 프로젝트가 있다고 해 봅시다. Famphlet의 API는 `/sites`로 시작합니다. 그런데 API 사용자가 오타를 내면 어떨까요?
 
 ```
 http://localhost:8080/site
@@ -65,7 +61,7 @@ http://localhost:8080/site
 ### HTTP 상태 코드 사용
 
 재정의한 예외가 발생했을 때 HTTP 상태 코드를 임의로 정의해서 사용할 수 있습니다. 먼저 예외를 만들어봅시다.  
-Famphlet에서는 Site를 찾을 수 없는 경우 예외가 발생합니다. 우리는 그 예외를 `IllegalArgumentException`으로 처리했었죠?
+Famphlet에서는 Site를 찾을 수 없는 경우 예외가 발생합니다. 우리는 그 예외를 `IllegalArgumentException`으로 발생 시킬 수 있습니다.
 
 ```kotlin
 override fun getSiteItem(id: Long): SiteItem {
@@ -89,7 +85,8 @@ class SiteNotFoundException(val id: Long) : Throwable()
 ```
 
 상태 코드가 `NO_CONTENT`면 `204`코드로 응답을 하고, 이는
->요청은 실패없이 처리했으나 제공할 컨텐츠가 없음
+
+> 요청은 실패없이 처리했으나 제공할 컨텐츠가 없음
 
 이라는 뜻입니다. `@ResponseStatus`의 value 속성과 더불어 reason 속성을 추가로 부여할 수 있습니다. 여기에는 오류의 내용을 입력할 수 있습니다. 그러나 204는 [제공할 컨텐츠가 없는 상태](https://tools.ietf.org/html/rfc7231#section-6.3.5)이므로 reason을 설정해도 아무런 응답 본문이 내려가지 않습니다.
 
@@ -140,7 +137,7 @@ fun handleSiteNotFound(e: SiteNotFoundException): Map<String, Any> {
     return mapOf(
             "error" to mapOf(
                     "code" to 9999,
-                    "message" to "존재하지 않는 ID입니다: ${e.id}"
+                    "message" to "존재하지 않는 사이트입니다: ID=${e.id}"
             )
     )
 }
@@ -152,7 +149,7 @@ fun handleSiteNotFound(e: SiteNotFoundException): Map<String, Any> {
 {
     "error": {
         "code": 9999,
-        "message": "존재하지 않는 ID입니다: 1"
+        "message": "존재하지 않는 사이트입니다: ID=1"
     }
 }
 ```
@@ -234,7 +231,8 @@ class GlobalExceptionHandler {
 }
 ```
 
-클래스를 새로 만들고 `@ControllerAdvice` 어노테이션을 붙여주었습니다. 그리고 메서드 정의는 위에서 `@ExceptionHandler`를 썼던 것과 같습니다. 그러니까 `@ExceptionHandler`가 `@ControllerAdvice`에 있다는 것이 유일한 차이점이죠.
+클래스를 새로 만들고 `@ControllerAdvice` 어노테이션을 붙여주었습니다. 그리고 메서드 정의는 위에서 `@ExceptionHandler`를 썼던 것과 같습니다. 그러니까 `@ExceptionHandler`가 `@ControllerAdvice`에 있다는 것이 유일한 차이점이죠. 다만 이렇게 `@ControllerAdvice`를 오류 처리기로 사용하면 모든 컨트롤러의 처리되지 않은 예외가 이곳에서 처리됩니다.
+즉, 예외 처리를 중앙 집중화할 수 있는 것이죠.
 
 ### 저수준 처리
 
@@ -262,4 +260,4 @@ class GlobalExceptionHandler {
 
 ---
 
-우리는 이전 포스트에서 처음 만든 API가 `500` 코드로 응답하는 것에 당황하였습니다. 하지만 이제는 그럴 필요는 없게 되었네요. 이제 적절한 처리를 할 수 있기 때문에, 응답을 받은 사용자가 무엇이 잘못됐고 **무엇을 해야 하는지** 안내할 수 있게 되었습니다. **사용자가 무엇을 해야 하는지 알려주는 것**은 매우 중요합니다. 기능이 성공했을 땐 다음 단계에 대해 쉽게 설명하고, 실패했을 때는 대안이 무엇인지 쉽게 설명하는 것입니다. 오늘 공부해 본 오류 처리 방법으로 사용자가 API 오류 또는 실패 응답을 받았을 때 무엇을 해야 하는지 친절하게 알려줍시다.
+우리는 종종 API가 `500` 코드로 응답하는 것에 당황하였습니다. 하지만 이제는 그럴 필요는 없게 되었네요. 이제 적절한 처리를 할 수 있기 때문에, 응답을 받은 사용자가 무엇이 잘못됐고 **무엇을 해야 하는지** 안내할 수 있게 되었습니다. **사용자가 무엇을 해야 하는지 알려주는 것**은 매우 중요합니다. 기능이 성공했을 땐 다음 단계에 대해 쉽게 설명하고, 실패했을 때는 대안이 무엇인지 쉽게 설명하는 것입니다. 오늘 공부해 본 오류 처리 방법으로 사용자가 API 오류 또는 실패 응답을 받았을 때 무엇을 해야 하는지 친절하게 알려줍시다.

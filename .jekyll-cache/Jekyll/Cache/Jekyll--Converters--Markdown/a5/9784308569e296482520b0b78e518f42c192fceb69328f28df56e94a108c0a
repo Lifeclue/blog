@@ -1,0 +1,264 @@
+I"�k<p>저번 포스트가 너무 길어지는 바람에 부득이하게 내용을 끊었습니다. 이번 포스트에서 간단하게 나마 API의 오류를 처리하여 인간 친화적인 응답을 만들어 보도록 하겠습니다.</p>
+
+<h1 id="api-오류">API 오류</h1>
+
+<p>모든 API가 성공하는 것은 물론 아니겠지요. 요청에 실수가 있었을 수도 있고 API에 버그가 있을 수도 있습니다. 네트워크는 항상 불신해야 합니다. DB에 문제가 생길 수도 있습니다. 갑자기 많은 요청이 몰려 서버에 과부하가 걸릴 수도 있지요. 이런 경우에 API는 오류를 반환합니다.</p>
+
+<h2 id="spring-기본-오류">Spring 기본 오류</h2>
+
+<p>저번에 만든 Famphlet 프로젝트를 봅시다. Famphlet의 API는 <code class="highlighter-rouge">/sites</code>로 시작합니다. 그런데 API 사용자가 오타를 내면 어떨까요?</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://localhost:8080/site
+</code></pre></div></div>
+
+<p>응답으로 <code class="highlighter-rouge">404</code> 상태 코드가 옵니다. 그리고 아래처럼 오류 정보를 같이 제공해줍니다. 이것은 스프링이 기본으로 제공하는 오류입니다.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-03T12:49:03.331+0000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">404</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not Found"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"No message available"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/site"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>스프링에서 기본으로 제공해주는 오류 응답은 위와 같은 형식입니다. 여기서 값만 바뀌는거죠.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">timestamp</code> 오류가 발생한 시각입니다.</li>
+  <li><code class="highlighter-rouge">status</code> HTTP 상태 코드를 오류 정보에서도 제공하는 것입니다.</li>
+  <li><code class="highlighter-rouge">error</code> HTTP 상태 코드의 의미를 자연어로 풀어 놓은 것입니다.</li>
+  <li><code class="highlighter-rouge">message</code> 추가적으로 서버에서 제공하는 오류 문구입니다.</li>
+  <li><code class="highlighter-rouge">path</code> 오류가 발생한 경로입니다.</li>
+</ul>
+
+<h2 id="처리되지-않은-오류">처리되지 않은 오류</h2>
+
+<p>스프링이 기본으로 제공해주는 오류는 처리되지 않은 오류입니다. 우리가 처리한 적이 없는데 없는 주소로 접근했을 때 위처럼 응답을 내려주었죠? 하지만 사용자는 <code class="highlighter-rouge">No message available</code> 같은 오류를 보고 당혹스러울 수밖에 없습니다. 스프링이 기본 오류를 응답하도록 가만히 두고 볼 수만은 없겠네요.</p>
+
+<h2 id="오류-처리">오류 처리</h2>
+
+<p>그렇다면 오류 처리는 어떻게 할 수 있을까요? 스프링에서 소개하는 오류 처리 방법 몇 가지가 있습니다. 이제부터의 내용은 <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc">Exception Handling in Spring MVC</a>를 재해석하는 내용입니다.</p>
+
+<ul>
+  <li>HTTP 상태 코드 사용</li>
+  <li>@Controller 기반 오류 처리
+    <ul>
+      <li>@ExceptionHandler 사용</li>
+      <li>오류 화면 제공</li>
+    </ul>
+  </li>
+  <li>전역 오류 처리
+    <ul>
+      <li>@ControllerAdvice 사용</li>
+    </ul>
+  </li>
+  <li>저수준 처리
+    <ul>
+      <li>HandlerExceptionResolver 사용</li>
+      <li>SimpleMappingExceptionResolver 사용</li>
+      <li>SimpleMappingExceptionResolver 확장</li>
+      <li>ExceptionHandlerExceptionResolver 확장</li>
+    </ul>
+  </li>
+</ul>
+
+<p>몇 가지라기에는 좀 많긴 하군요.</p>
+
+<h3 id="http-상태-코드-사용">HTTP 상태 코드 사용</h3>
+
+<p>재정의한 예외가 발생했을 때 HTTP 상태 코드를 임의로 정의해서 사용할 수 있습니다. 먼저 예외를 만들어봅시다.<br />
+Famphlet에서는 Site를 찾을 수 없는 경우 예외가 발생합니다. 우리는 그 예외를 <code class="highlighter-rouge">IllegalArgumentException</code>으로 처리했었죠?</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">fun</span> <span class="nf">getSiteItem</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="nc">Long</span><span class="p">):</span> <span class="nc">SiteItem</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">itemStore</span><span class="p">.</span><span class="nf">findById</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="o">?:</span> <span class="k">throw</span> <span class="nc">IllegalArgumentException</span><span class="p">(</span><span class="s">"${id}에 해당하는 즐겨찾기를 찾을 수 없습니다."</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>넓은 의미에서는 요청값이 잘못된 것이 맞지만 좀 더 명확한 예외를 만들어서 처리해봅시다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SiteNotFoundException</span><span class="p">(</span><span class="kd">val</span> <span class="py">id</span><span class="p">:</span> <span class="nc">Long</span><span class="p">)</span> <span class="p">:</span> <span class="nc">Throwable</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><a href="https://kotlinlang.org/docs/reference/exceptions.html">코틀린의 예외</a>는 모두 Throwable을 확장합니다. 특히 코틀린에는 확인 필 예외가 없다는 점이 눈길을 끕니다. <a href="https://kotlinlang.org/docs/reference/exceptions.html#checked-exceptions">Checked Exceptions에 관한 문서</a>를 보면 여러 관점을 소개하며 확인 필 예외가 얼마나 피로감을 주는지에 대해 설명하고 있으니 일독 하셔도 좋을 것 같습니다.</p>
+
+<p>예외를 만들었다면 여기에 어노테이션을 붙여 줌으로써 HTTP 상태 코드를 의미 있는 값으로 지정하여 응답에 내려줄 수 있습니다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">value</span><span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">NO_CONTENT</span><span class="p">)</span>
+<span class="kd">class</span> <span class="nc">SiteNotFoundException</span><span class="p">(</span><span class="kd">val</span> <span class="py">id</span><span class="p">:</span> <span class="nc">Long</span><span class="p">)</span> <span class="p">:</span> <span class="nc">Throwable</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>상태 코드가 <code class="highlighter-rouge">NO_CONTENT</code>면 <code class="highlighter-rouge">204</code>코드로 응답을 하고, 이는</p>
+<blockquote>
+  <p>요청은 실패없이 처리했으나 제공할 컨텐츠가 없음</p>
+</blockquote>
+
+<p>이라는 뜻입니다. <code class="highlighter-rouge">@ResponseStatus</code>의 value 속성과 더불어 reason 속성을 추가로 부여할 수 있습니다. 여기에는 오류의 내용을 입력할 수 있습니다. 그러나 204는 <a href="https://tools.ietf.org/html/rfc7231#section-6.3.5">제공할 컨텐츠가 없는 상태</a>이므로 reason을 설정해도 아무런 응답 본문이 내려가지 않습니다.</p>
+
+<h3 id="controller-기반-오류-처리">@Controller 기반 오류 처리</h3>
+
+<h4 id="exceptionhandler-사용">@ExceptionHandler 사용</h4>
+
+<p>컨트롤러에 <code class="highlighter-rouge">@ExceptionHandler</code> 어노테이션이 붙은 메서드를 정의하면 <code class="highlighter-rouge">@RequestMapping</code> 이 붙은 메서드를 처리하다가 발생한 예외를 그 메서드에서 처리할 수 있습니다. 이 메서드에서는 다음과 같은 일을 할 수 있습니다.</p>
+
+<ul>
+  <li>이미 만들어져 있어서 <code class="highlighter-rouge">@ResponseStatus</code> 어노테이션을 붙일 수 없는 예외들 처리하기</li>
+  <li>예외 별로 응답 본문을 다르게 정의하기</li>
+  <li>오류 페이지를 만들고 그 화면으로 보내기</li>
+</ul>
+
+<p>위의 예제를 <code class="highlighter-rouge">@ExceptionHandler</code> 어노테이션을 이용해 처리해봅시다.</p>
+
+<h5 id="exceptionhandler와-responsestatus">@ExceptionHandler와 @ResponseStatus</h5>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="nc">SiteNotFoundException</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+<span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">code</span> <span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">NO_CONTENT</span><span class="p">)</span>
+<span class="k">fun</span> <span class="nf">handleSiteNotFound</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+<span class="cm">/* 혹은 */</span>
+<span class="nd">@ExceptionHandler</span>
+<span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">code</span> <span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">NO_CONTENT</span><span class="p">)</span>
+<span class="k">fun</span> <span class="nf">handleSiteNotFound</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">SiteNotFoundException</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">@ExceptionHandler</code>에서 <code class="highlighter-rouge">SiteNotFoundException</code>을 처리하는 방법은 두 가지 입니다. 어노테이션에 처리할 예외를 정의하는 것과 실제 처리하는 메서드가 처리할 예외를 인자로 받는 것이지요. 둘 중에 한 곳에는 반드시 처리할 예외를 정의해주어야 합니다. 그렇지 않으면 이런 예외를 만나게 됩니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">IllegalStateException</span><span class="o">:</span> <span class="nc">No</span> <span class="n">exception</span> <span class="n">types</span> <span class="n">mapped</span> <span class="n">to</span> <span class="kd">public</span> <span class="kt">void</span> <span class="n">com</span><span class="o">.</span><span class="na">lifeclue</span><span class="o">.</span><span class="na">blog</span><span class="o">.</span><span class="na">famphlet</span><span class="o">.</span><span class="na">SiteItemController</span><span class="o">.</span><span class="na">handleSiteNotFound</span>
+</code></pre></div></div>
+
+<p>저는 주로 인자로 받아서 처리하는 편입니다. 예외 중에서는 멤버 변수에 쓸 만한 값들을 갖도 있는 경우도 있기 때문입니다.</p>
+
+<h5 id="오류-응답-재정의">오류 응답 재정의</h5>
+
+<p>응답을 서비스 문맥에 맞게 변경할 수도 있습니다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ExceptionHandler</span>
+<span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">code</span> <span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">BAD_REQUEST</span><span class="p">)</span>
+<span class="k">fun</span> <span class="nf">handleSiteNotFound</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">SiteNotFoundException</span><span class="p">):</span> <span class="nc">Map</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">,</span> <span class="nc">Any</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">mapOf</span><span class="p">(</span>
+            <span class="s">"error"</span> <span class="n">to</span> <span class="nf">mapOf</span><span class="p">(</span>
+                    <span class="s">"code"</span> <span class="n">to</span> <span class="m">9999</span><span class="p">,</span>
+                    <span class="s">"message"</span> <span class="n">to</span> <span class="s">"존재하지 않는 ID입니다: ${e.id}"</span>
+            <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>요청이 잘못된 것(<code class="highlighter-rouge">400</code>)으로 처리하고 응답을 자세히 내려주었습니다. 이렇게 처리하면 응답을 다음과 같이 받습니다.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"존재하지 않는 ID입니다: 1"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>물론 Map보다는 오류 클래스를 정의하여 사용하시는 것을 권장합니다.</p>
+
+<h5 id="전용-오류-화면으로-안내">전용 오류 화면으로 안내</h5>
+
+<p>만약 웹서비스라면 오류 화면으로 안내할 수도 있습니다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Controller</span>
+<span class="kd">class</span> <span class="nc">SiteItemController</span><span class="p">(</span><span class="kd">val</span> <span class="py">siteItemService</span><span class="p">:</span> <span class="nc">SiteItemService</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="nc">SiteNotFoundException</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+    <span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">code</span> <span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">BAD_REQUEST</span><span class="p">)</span>
+    <span class="k">fun</span> <span class="nf">handleSiteNotFound</span><span class="p">():</span> <span class="nc">String</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">"site_not_found"</span>
+    <span class="p">}</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>컨트롤러의 어노테이션을 <code class="highlighter-rouge">@RestController</code>에서 <code class="highlighter-rouge">@Controller</code>로 변경한 것에 주의하십시오. <code class="highlighter-rouge">@RestController</code>는 기본으로 <code class="highlighter-rouge">@ResponseBody</code>가 붙은 것으로 동작합니다. 그러니까 HTML을 응답으로 줄 수 없다는 것입니다. 그래서 <code class="highlighter-rouge">@RestController</code>에서 위와 같이 처리하면 응답이 <code class="highlighter-rouge">site_not_found</code>라는 문자열로 나갈 겁니다. 페이지로 이동하기 위해서는 <code class="highlighter-rouge">@Controller</code>로 변경해주시고 View의 이름을 반환하면 됩니다.</p>
+
+<h4 id="오류-화면에서-예외-정보-제공">오류 화면에서 예외 정보 제공</h4>
+
+<p>오류를 전용 오류 화면으로 안내할 때 오류 화면에 예외에 대한 정보를 출력할 수 있습니다. 이것이 일반 사용자들에게는 사실 중요한 정보는 아닙니다. 오히려 눈살을 찌푸리게 할 수도 있지요. 하지만 고객 지원 업무를 담당하는 직원이 고객과 개발자 사이에서 소통할 때 이 정보를 활용할 수도 있습니다. 또는 어떤 서비스냐에 따라 활용도가 높을 수도 있지요. 결국 개발자가 선택해야 할 문제입니다.</p>
+
+<p>오류 화면에서 예외의 정보를 제공하려면 <code class="highlighter-rouge">ModelAndView</code>를 이용하시면 됩니다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Controller</span>
+<span class="kd">class</span> <span class="nc">SiteItemController</span><span class="p">(</span><span class="kd">val</span> <span class="py">siteItemService</span><span class="p">:</span> <span class="nc">SiteItemService</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="nd">@ExceptionHandler</span>
+    <span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">code</span> <span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">BAD_REQUEST</span><span class="p">)</span>
+    <span class="k">fun</span> <span class="nf">redirectToSiteNotFound</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">SiteNotFoundException</span><span class="p">):</span> <span class="nc">ModelAndView</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="py">mav</span> <span class="p">=</span> <span class="nc">ModelAndView</span><span class="p">()</span>
+        <span class="n">mav</span><span class="p">.</span><span class="nf">addObject</span><span class="p">(</span><span class="s">"exception"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">mav</span><span class="p">.</span><span class="n">viewName</span> <span class="p">=</span> <span class="s">"site_not_found"</span>
+        <span class="k">return</span> <span class="n">mav</span>
+    <span class="p">}</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="전역-오류-처리">전역 오류 처리</h3>
+
+<p>컨트롤러 내에서 사용한 <code class="highlighter-rouge">@ExceptionHandler</code>는 해당 컨트롤러에서 발생한 예외만 처리하게 됩니다. 또한 <code class="highlighter-rouge">Throwable</code>을 확장한 예외 클래스의 <code class="highlighter-rouge">@ResponseStatus</code>는 이 어노테이션이 있는 예외에서만 작동합니다. 하지만 시간이 흐르고 흘러 기능이 추가되고 사용자들이나 회사 내부의 기획자 등등으로부터 요구사항이 발생하면서 변화가 누적되었을 때, 그 때는 컨트롤러도 여러 개일 테고 직접 작성한 예외도 많을 겁니다. 이것들을 일일이 찾아다니면서 예외 처리 구문을 추가해 주려면 생각만 해도 끔찍하네요.</p>
+
+<p>전역 오류 처리는 이럴 때 유용합니다.</p>
+
+<h4 id="controlleradvice-사용">@ControllerAdvice 사용</h4>
+
+<p><code class="highlighter-rouge">@ControllerAdvice</code>가 붙은 클래스를 정의하면 이 클래스는 <code class="highlighter-rouge">controller-advice</code>가 되고 세 가지 메서드가 지원됩니다. (스프링에 의해 호출이 된다는 뜻입니다.)</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@ExceptionHandler</code> 어노테이션이 붙은 메서드에서 예외 처리</li>
+  <li><code class="highlighter-rouge">@ModelAttribute</code> 어노테이션이 붙은 메서드에서 Model에 추가 attribute 제공 (정상 동작할 때 작동하기 때문에 <code class="highlighter-rouge">@ExceptionHandler</code>와 같이 호출되지는 읺습니다.)</li>
+  <li><code class="highlighter-rouge">@InitBinder</code> 어노테이션이 붙은 메서드에서 Binder 초기화</li>
+</ul>
+
+<p>우리가 볼 것은 물론 <code class="highlighter-rouge">@ExceptionHandler</code>입니다. 그리고 이것은 <code class="highlighter-rouge">@Controller</code> 기반 오류 처리를 했을 때와 거의 유사합니다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ControllerAdvice</span>
+<span class="kd">class</span> <span class="nc">GlobalExceptionHandler</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="nd">@ExceptionHandler</span>
+    <span class="nd">@ResponseStatus</span><span class="p">(</span><span class="n">code</span> <span class="p">=</span> <span class="nc">HttpStatus</span><span class="p">.</span><span class="nc">BAD_REQUEST</span><span class="p">)</span>
+    <span class="k">fun</span> <span class="nf">handleSiteNotFound</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="nc">SiteNotFoundException</span><span class="p">):</span> <span class="nc">Map</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">,</span> <span class="nc">Any</span><span class="p">&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">mapOf</span><span class="p">(</span>
+                <span class="s">"error"</span> <span class="n">to</span> <span class="nf">mapOf</span><span class="p">(</span>
+                        <span class="s">"code"</span> <span class="n">to</span> <span class="m">9999</span><span class="p">,</span>
+                        <span class="s">"message"</span> <span class="n">to</span> <span class="s">"존재하지 않는 ID입니다: ${e.id}"</span>
+                <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>클래스를 새로 만들고 <code class="highlighter-rouge">@ControllerAdvice</code> 어노테이션을 붙여주었습니다. 그리고 메서드 정의는 위에서 <code class="highlighter-rouge">@ExceptionHandler</code>를 썼던 것과 같습니다. 그러니까 <code class="highlighter-rouge">@ExceptionHandler</code>가 <code class="highlighter-rouge">@ControllerAdvice</code>에 있다는 것이 유일한 차이점이죠.</p>
+
+<h3 id="저수준-처리">저수준 처리</h3>
+
+<p>저수준 처리는 직접 코드를 추가해주는 것입니다. 더 많은 것을 제어할 수 있지만 더 많은 고생을 해야 합니다. 이 부분은 많은 설명을 하지 않습니다. <a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc#going-deeper">문서</a>를 참조하시는 것이 제가 설명을 드리는 것보다 오해도 없고 빠를 것 같군요.</p>
+
+<h4 id="handlerexceptionresolver-인터페이스-구현">HandlerExceptionResolver 인터페이스 구현</h4>
+
+<p>인터페이스를 직접 구현합니다. <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/HandlerExceptionResolver.html#resolveException-javax.servlet.http.HttpServletRequest-javax.servlet.http.HttpServletResponse-java.lang.Object-java.lang.Exception-">resolveException 메서드</a>를 구현하면 <code class="highlighter-rouge">HttpServletRequest</code>와 <code class="highlighter-rouge">HttpServletResponse</code>를 이용해 직접 예외를 처리할 수 있습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Nullable</span>
+  <span class="nc">ModelAndView</span> <span class="nf">resolveException</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="nc">Object</span> <span class="n">handler</span><span class="o">,</span> <span class="nc">Exception</span> <span class="n">ex</span><span class="o">);</span>
+</code></pre></div></div>
+
+<h4 id="simplemappingexceptionresolver-사용">SimpleMappingExceptionResolver 사용</h4>
+
+<p><code class="highlighter-rouge">SimpleMappingExceptionResolver</code> 클래스를 사용할 수 있습니다. XML 또는 어노테이션 기반으로 빈 정의를 할 때 <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/handler/SimpleMappingExceptionResolver.html#setExceptionMappings-java.util.Properties-">setExceptionMappings 메서드</a>를 이용해 예외 맵을 설정하면 됩니다.</p>
+
+<h4 id="simplemappingexceptionresolver-확장">SimpleMappingExceptionResolver 확장</h4>
+
+<p>로거 설정 및 사용, 또는 예외 처리의 추가 작업 등을 위해 예외 맵을 추가하지 않고 클래스를 확장(상속)하여 사용할 수 있습니다.</p>
+
+<h4 id="exceptionhandlerexceptionresolver-확장">ExceptionHandlerExceptionResolver 확장</h4>
+<p><code class="highlighter-rouge">ExceptionHandlerExceptionResolver</code>를 확장하여 <code class="highlighter-rouge">doResolveHandlerMethodException</code>메서드를 재정의하는 것도 방법입니다. 상속받은 <code class="highlighter-rouge">order</code> 속성을 잘 정의하면 <code class="highlighter-rouge">ExceptionHandlerExceptionResolver</code>의 기본 객체보다 앞서 호출되게 설정할 수도 있습니다.</p>
+
+<hr />
+
+<p>우리는 이전 포스트에서 처음 만든 API가 <code class="highlighter-rouge">500</code> 코드로 응답하는 것에 당황하였습니다. 하지만 이제는 그럴 필요는 없게 되었네요. 이제 적절한 처리를 할 수 있기 때문에, 응답을 받은 사용자가 무엇이 잘못됐고 <strong>무엇을 해야 하는지</strong> 안내할 수 있게 되었습니다. <strong>사용자가 무엇을 해야 하는지 알려주는 것</strong>은 매우 중요합니다. 기능이 성공했을 땐 다음 단계에 대해 쉽게 설명하고, 실패했을 때는 대안이 무엇인지 쉽게 설명하는 것입니다. 오늘 공부해 본 오류 처리 방법으로 사용자가 API 오류 또는 실패 응답을 받았을 때 무엇을 해야 하는지 친절하게 알려줍시다.</p>
+:ET
