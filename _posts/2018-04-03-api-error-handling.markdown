@@ -8,9 +8,7 @@ tags: 스프링 Spring 스프링부트 SpringBoot
 ---
 여러분의 API는 안녕하신가요? 모든 API가 성공적으로 응답하는 것은 물론 아니겠지요. 요청에 실수가 있었을 수도 있고 API에 버그가 있을 수도 있습니다. 네트워크는 항상 불신해야 합니다. DB에 문제가 생길 수도 있습니다. 이런 경우에 API는 오류를 반환합니다.
 
-## Spring 기본 오류
-
-Famphlet이라는 프로젝트가 있다고 해 봅시다. Famphlet의 API는 `/sites`로 시작합니다. 그런데 API 사용자가 오타를 내면 어떨까요?
+먼저 스프링이 어떻게 오류를 반환하는지 살펴보도록 할게요. Famphlet이라는 프로젝트가 있다고 해 봅시다. Famphlet의 API는 `/sites`로 시작합니다. 그런데 API 사용자가 오타를 내면 어떨까요?
 
 ```
 http://localhost:8080/site
@@ -36,11 +34,7 @@ http://localhost:8080/site
 - `message` 추가적으로 서버에서 제공하는 오류 문구입니다.
 - `path` 오류가 발생한 경로입니다.
 
-## 처리되지 않은 오류
-
 스프링이 기본으로 제공해주는 오류는 처리되지 않은 오류입니다. 우리가 처리한 적이 없는데 없는 주소로 접근했을 때 위처럼 응답을 내려주었죠? 하지만 사용자는 `No message available` 같은 오류를 보고 당혹스러울 수밖에 없습니다. 스프링이 기본 오류를 응답하도록 가만히 두고 볼 수만은 없겠네요.
-
-## 오류 처리
 
 그렇다면 오류 처리는 어떻게 할 수 있을까요? 스프링에서 소개하는 오류 처리 방법 몇 가지가 있습니다. 이제부터의 내용은 [Exception Handling in Spring MVC](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc)를 재해석하는 내용입니다.
 
@@ -92,6 +86,8 @@ class SiteNotFoundException(val id: Long) : Throwable()
 
 ### @Controller 기반 오류 처리
 
+특정 컨트롤러에서 발생하는 예외를 오류로 처리할 수 있습니다.
+
 #### @ExceptionHandler 사용
 
 컨트롤러에 `@ExceptionHandler` 어노테이션이 붙은 메서드를 정의하면 `@RequestMapping` 이 붙은 메서드를 처리하다가 발생한 예외를 그 메서드에서 처리할 수 있습니다. 이 메서드에서는 다음과 같은 일을 할 수 있습니다.
@@ -100,9 +96,7 @@ class SiteNotFoundException(val id: Long) : Throwable()
 - 예외 별로 응답 본문을 다르게 정의하기
 - 오류 페이지를 만들고 그 화면으로 보내기
 
-위의 예제를 `@ExceptionHandler` 어노테이션을 이용해 처리해봅시다.
-
-##### @ExceptionHandler와 @ResponseStatus
+위의 예제를 `@ExceptionHandler` 어노테이션을 이용해 처리해봅시다. 먼저 `@ResponseStatus`을 이용하여 특정 예외에 대해 특정 HTTP 코드를 반환하도록 해보죠.
 
 ```kotlin
 @ExceptionHandler(SiteNotFoundException::class)
@@ -118,6 +112,8 @@ fun handleSiteNotFound(e: SiteNotFoundException) {
 }
 ```
 
+이제 `SiteNotFoundException`이 발생하면 `204`코드가 전달됩니다.
+
 `@ExceptionHandler`에서 `SiteNotFoundException`을 처리하는 방법은 두 가지 입니다. 어노테이션에 처리할 예외를 정의하는 것과 실제 처리하는 메서드가 처리할 예외를 인자로 받는 것이지요. 둘 중에 한 곳에는 반드시 처리할 예외를 정의해주어야 합니다. 그렇지 않으면 이런 예외를 만나게 됩니다.
 
 ```java
@@ -126,7 +122,6 @@ java.lang.IllegalStateException: No exception types mapped to public void com.li
 
 저는 주로 인자로 받아서 처리하는 편입니다. 예외 중에서는 멤버 변수에 쓸 만한 값들을 갖도 있는 경우도 있기 때문입니다.
 
-##### 오류 응답 재정의
 
 응답을 서비스 문맥에 맞게 변경할 수도 있습니다.
 
@@ -156,7 +151,6 @@ fun handleSiteNotFound(e: SiteNotFoundException): Map<String, Any> {
 
 물론 Map보다는 오류 클래스를 정의하여 사용하시는 것을 권장합니다.
 
-##### 전용 오류 화면으로 안내
 
 만약 웹서비스라면 오류 화면으로 안내할 수도 있습니다.
 
