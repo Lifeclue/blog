@@ -72,7 +72,7 @@ message Person {
 
 인텔리제이에서 새 프로젝트 창을 띄우면 케이터 프로젝트를 만들 수 있습니다. 이를 통해 쉽게 케이터 프로젝트를 만들고 초기 설정을 건너뛸 수 있습니다.
 
-![인텔리제이 케이터 새 프로젝트 만들기]({{"/assets/images/page/ktor-protobuf/new_project_ktor.png" | absolute_url}})
+![인텔리제이 케이터 새 프로젝트 만들기]({{"/assets/images/page/ktor-protobuf/new_project_ktor.PNG" | absolute_url}})
 
 일단 이것 저것 선택하지 않고 만들었습니다. 제가 만진 거라곤 `GradleKotlinDsl`뿐입니다.
 
