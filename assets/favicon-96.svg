@@ -9,18 +9,32 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   viewBox="0 0 4.2333332 4.2333335"
+   width="96"
+   height="96"
+   viewBox="0 0 25.399999 25.400001"
    version="1.1"
    id="svg38"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="favicon-16.svg"
-   inkscape:export-filename="D:\Workspace\blog\assets\favicon-16.png"
+   sodipodi:docname="favicon-96.svg"
+   inkscape:export-filename="D:\Workspace\blog\assets\favicons\favicon-96x96.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
-     id="defs32" />
+     id="defs32">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter4644"
+       x="-0.015875"
+       width="1.03175"
+       y="-0.0096455695"
+       height="1.0192911">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.010607259"
+         id="feGaussianBlur4646" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#272727"
@@ -28,11 +42,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="9.6177236"
-     inkscape:cy="21.329427"
+     inkscape:zoom="11.2"
+     inkscape:cx="51.756074"
+     inkscape:cy="45.748332"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer4"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"
@@ -99,6 +113,61 @@
        orientation="0,1"
        id="guide4575"
        inkscape:locked="false" />
+    <sodipodi:guide
+       position="7.8891484,19.014243"
+       orientation="1,0"
+       id="guide4656"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="12.7,20.617861"
+       orientation="1,0"
+       id="guide4658"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="7.8891484,20.617861"
+       orientation="0,1"
+       id="guide4660"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="9.4927659,19.014243"
+       orientation="0,1"
+       id="guide4662"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="9.4927659,6.3356444"
+       orientation="0,1"
+       id="guide4664"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="7.8891484,4.7821406"
+       orientation="0,1"
+       id="guide4666"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="15.907233,7.8891483"
+       orientation="0,1"
+       id="guide4668"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="9.4927659,6.3356444"
+       orientation="1,0"
+       id="guide4670"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="11.146495,6.3356444"
+       orientation="1,0"
+       id="guide4672"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="15.907233,7.8891483"
+       orientation="1,0"
+       id="guide4674"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="17.510851,7.8891483"
+       orientation="1,0"
+       id="guide4676"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <metadata
      id="metadata35">
@@ -116,12 +185,13 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="BG"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(0,21.166667)" />
   <g
      inkscape:label="Text"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-292.76665)"
+     transform="translate(0,-271.59999)"
      style="display:none">
     <text
        xml:space="preserve"
@@ -139,15 +209,29 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Pixel"
-     style="display:inline">
+     style="display:none"
+     transform="translate(0,21.166667)">
     <a
-       id="a869">
+       id="a869"
+       transform="matrix(6,0,0,6,-0.0287105,-21.137955)"
+       style="opacity:1;filter:url(#filter4644)">
       <path
          inkscape:connector-curvature="0"
          id="path867"
-         d="M 1.3196432,0.79223803 V 1.0595076 H 1.5869128 V 3.1726073 H 1.3196432 V 3.4315246 H 2.9232603 V 3.1726073 l 0,-0.2589173 H 2.6559907 l 0,0.2589173 H 1.8625344 V 1.0595076 H 2.1214518 V 0.79223805 Z"
+         d="M 1.3196432,0.79223803 V 1.0595076 H 1.5869128 V 3.1726073 H 1.3196432 V 3.4315246 H 2.9232603 V 3.1726073 2.91369 H 2.6559907 V 3.1726073 H 1.8625344 V 1.0595076 H 2.1214518 V 0.79223805 Z"
          style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          sodipodi:nodetypes="cccccccccccccccc" />
     </a>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Layer 1"
+     transform="translate(0,21.166667)">
+    <path
+       style="fill:#ffffff;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="M 12.7,-16.384528 H 7.8891484 v 1.603618 H 9.4927657 V -2.1023117 H 7.8891484 v 1.55350389 H 17.510851 V -3.6558154 h -1.603618 v 1.5535037 H 11.146495 V -14.78091 H 12.7 Z"
+       id="path4680"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

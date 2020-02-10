@@ -26,7 +26,7 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="14.822806"
+     inkscape:cx="7.0256911"
      inkscape:cy="14.678187"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -70,16 +70,16 @@
      transform="translate(0,-288.53331)">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.77529621px;line-height:1.59127092px;font-family:'Cambria Math';-inkscape-font-specification:'Cambria Math';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:-0.06909651px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.43314713"
-       x="0.5017904"
-       y="294.68494"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.8379488px;line-height:2.98618674px;font-family:'Cambria Math';-inkscape-font-specification:'Cambria Math';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:-0.12966685px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.812846"
+       x="1.1613463"
+       y="296.37842"
        id="text847"><tspan
          sodipodi:role="line"
-         x="0.5017904"
-         y="294.68494"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.77529621px;line-height:1.59127092px;font-family:'Cambria Math';-inkscape-font-specification:'Cambria Math';letter-spacing:-0.06909651px;fill:#ffffff;fill-opacity:1;stroke-width:0.43314713"
+         x="1.1613463"
+         y="296.37842"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.8379488px;line-height:2.98618674px;font-family:'Cambria Math';-inkscape-font-specification:'Cambria Math';letter-spacing:-0.12966685px;fill:#ffffff;fill-opacity:1;stroke-width:0.812846"
          id="tspan882">L<tspan
-   style="font-size:1.62611616px;letter-spacing:-0.06909651px;stroke-width:0.43314713"
-   id="tspan888">ifeclue</tspan></tspan></text>
+   style="font-size:3.05157757px;letter-spacing:-0.12966685px;stroke-width:0.812846"
+   id="tspan888" /></tspan></text>
   </g>
 </svg>

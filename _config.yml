@@ -13,8 +13,8 @@ name: "Lifeclue"
 author: "Lifeclue"
 paginate: 5
 url: "https://lifeclue.github.io"
-float_logo: "/assets/images/site/logo-32.png"
-logo: "/assets/images/site/logo.png"
+float_logo: "/assets/images/site/logo-32.png" # Cambria Math
+logo: "/assets/images/site/author_image.jpg"
 cover: "/assets/images/site/cover.svg"
 author_image: "/assets/images/site/author_image.jpg"
 disqus: "lifeclue-blog"
