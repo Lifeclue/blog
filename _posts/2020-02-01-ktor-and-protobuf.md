@@ -5,6 +5,7 @@ date: "2020-02-01 01:39:06 +0900"
 categories: Ktor ProtoBuf
 comments: true
 image: /assets/images/page/ktor-protobuf/20141121_080941.jpg
+image2: /assets/images/page/ktor-protobuf/20141121_080941_ptrt.jpg
 tags: 케이터 Ktor 프로토버퍼 Protobuf 프로토콜버퍼 ProtocolBuffer
 ---
 
