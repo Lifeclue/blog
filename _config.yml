@@ -26,6 +26,12 @@ social:
     share_url:
     share_title:
     share_link:
+  - icon:	envelope
+    url:	mailto:lifecluee@gmail.com
+    desc:	Send email to me
+    share_url:
+    share_title:
+    share_link:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
