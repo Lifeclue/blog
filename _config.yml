@@ -5,6 +5,7 @@ show_downloads: false
 show_excerpts: true
 markdown: kramdown
 google_analytics: UA-42372652-1
+google_tag_manager: G-ZGH515T6T0
 baseurl: "/blog"
 date_format: "%F"
 
